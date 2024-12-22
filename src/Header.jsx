@@ -2,7 +2,7 @@
 function Header () {
   return (
     <>
-      <h1>⛅ Weather doodah</h1>
+      <div className='header'>⛅ Weather hoolala</div>
     </>
   )
 }

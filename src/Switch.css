@@ -1,0 +1,49 @@
+.switch-container {
+  display: inline-block;
+  position: relative;
+  justify-self: end;
+  font-family: 'Arial';
+  padding: 4px;
+}
+
+.switch {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: 68px;
+  height: 21px;
+  border-radius: 20px;
+  border: 2px solid #818181;
+  font-size: 16px;
+  font-weight: bold;
+  align-content: center;
+  transition: background 0.9s ease-in-out;
+  text-align: center;
+}
+
+.switch.unchecked {
+  background: linear-gradient(to top, #828282, #d4d4d4);
+  color: #666666;
+}
+
+.switch.checked {
+  background: linear-gradient(to top, #3e70a2, #73a4d3);
+  color: #114475;
+  border: 2px solid #114422;
+}
+
+.switch-thumb {
+  height: 25px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  top: -4px;
+  left: -5px;
+  background: radial-gradient(#eeeeee, #cccccc, #828282);
+  border-radius: 50%;
+  border: 2px solid #919191;
+  transition: transform 0.3s ease-in-out;
+}
+
+.switch.checked .switch-thumb {
+  transform: translateX(54px);
+}

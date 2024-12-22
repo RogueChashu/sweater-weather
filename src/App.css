@@ -3,101 +3,175 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 
 :root {
   --color-bg: #111;
   --color-fg: #f8f8f8;
+  --color-contrast: #434A54;
 }
 
 @media(prefers-color-scheme: light) {
   :root {
     --color-bg: #f8f8f8;
     --color-fg: #111;
+    --color-contrast: #656D78;
   }
 }
 
 body {
   color: var(--color-fg);
   background-color: var(--color-bg);
-  font-size: 1.25rem;
+}
+
+.header {
+  font-size: 2.75rem;
+  padding-bottom: 2rem;
+  display: grid;
+  grid-template-areas:
+  "switch";
+}
+
+.switch-container {
+  grid-area: switch;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  grid-template-columns: 50% auto;
   grid-template-areas:
-  "currentWeather";
+  "currentWeather       ."
+  "currentWeather       search"
+  "fiveDay              fiveDay";
 }
 
 .currentWeather {
   grid-area: currentWeather;
-  padding: 12px;
-  border: 1px red solid;
-  border-radius: 16px;
-  margin: 32px;
   display: grid;
+  grid-template-columns: auto;
   grid-template-areas: 
-  "location       location"
-  "icon           currenConditions";
+  "location"
+  "currentContainer";
 }
 
 .location {
   grid-area: location;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  padding-left: 8px;
+}
+
+
+.weatherContainer {
+  align-items: center;
+  border: 1px #444 solid;
+  border-radius: 6px;
+  margin: 4px;
+  padding: 12px;
+  background-color: var(--color-contrast);
+  font-size: 1.35rem;
+  font-weight: normal;
+}
+
+.currentContainer {
+  grid-area: currentContainer;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 0.7fr 0.7fr 1.25fr;
+  grid-template-areas: 
+  "icon   temp    currenConditions";
 }
 
 .weatherIcon {
   grid-area: icon;
 }
 
+.tempValue {
+  grid-area: temp;
+  font-size: 2.5rem;
+  margin-left: 24px;
+}
+
 .curentConditions {
   grid-area: currentConditions;
 }
 
-input {
-  padding: 4px 6px;
-  border-radius: 9px;
-  height: 1.5rem;
-  width: 12rem;
-  font-size: 1rem;
+.searchField {
+  position: relative;
+  display: inline-block;
 }
 
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.searchIcon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #666;
+  pointer-events: none;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.searchInput {
+  grid-area: search;
+  padding-left: 30px;
+  border: 1px solid #ccc;
+  background-color: var(--color-contrast);
+  color: var(--color-fg);
+  font-weight: bold;
+  border-radius: 4px;
+  width: 80%;
+  height: 36px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.fiveDayForecast {
+  grid-area: fiveDay;
+  margin-top: 0.75rem;
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.card {
-  padding: 2em;
+.forecastsContainer {
+  margin-top: 1.1rem;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
-.read-the-docs {
-  color: #888;
+.forecast {
+  display: grid;
+  grid-template-areas: 
+  "date         date"
+  "icon         temp"
+  "conditions   conditions"
+  "tempMinMax   tempMinMax";
+  gap: 1.15rem;
+}
+
+.forecastDate {
+  grid-area: date;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.forecastIcon {
+  grid-area: icon;
+}
+
+.forecastTemp{
+  grid-area: temp;
+  font-size: 2.5rem;
+  text-align: end;
+}
+.forecastConditions {
+  grid-area: conditions;
+  font-size: 1.1rem;
+}
+
+.tempMinMax {
+  grid-area: tempMinMax;
 }

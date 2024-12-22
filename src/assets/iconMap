@@ -1,7 +1,0 @@
-const weatherIcons = {
-  'sunny':  '☀️',
-  'rain':   '🌧️',
-  'cloudy': '☁️',
-  'snow':   '🌨️'
-  'clear-night': '🌙'
-}
