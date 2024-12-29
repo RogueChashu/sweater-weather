@@ -1,29 +1,18 @@
-import { useEffect, useState } from 'react'
-import getIcon from "./getIcon"
-import convertTemperature from './temperatureConverter'
+import { convertTemperature, getIcon } from './utils'
 
-function CurrentLocation({ city, currentConditions, celsius }) {
-  const [icon, setIcon] = useState(null)
+function CurrentLocation({ city, weather, isCelsius }) {
 
-  const temperature = convertTemperature(currentConditions.temp, celsius)
-
-    useEffect(() => {
-      const loadIcon = async () => {
-        const loadedIcon = await getIcon(currentConditions.icon)
-        setIcon(loadedIcon)
-      }
-      loadIcon()
-    }, [currentConditions.icon]) 
+  const temperature = convertTemperature(weather.currentConditions.temp, isCelsius)
 
   return (
     <>
       <div className='currentWeather'>
-        <div className='location'>{city}</div>
+        <div className='location'>{(city) ? city : weather.resolvedAddress}</div>
 
         <div className='currentContainer weatherContainer'>
-          <div className='weatherIcon'><img src={icon} alt={currentConditions.icon} /></div>
-          <div className='tempValue'>{temperature}{celsius? '°C' : '°F'} </div>
-          <div className='currentConditions'>{currentConditions.conditions}</div>
+          <div className='weatherIcon'><img src={getIcon(weather.currentConditions.icon)} /></div>
+          <div className='tempValue'>{temperature}{isCelsius? '°C' : '°F'} </div>
+          <div className='currentConditions'>{weather.currentConditions.conditions}</div>
         </div>
       </div>
 

@@ -1,15 +1,22 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0px;
+  padding: 0.5rem 1.25rem;
   font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  display: grid;
+  grid-template-areas: 
+  "header     switch"
+  "header     search"
+  "container container";
+  grid-template-columns: 1fr 30%;
+  gap: 10px;
 }
 
 :root {
   --color-bg: #111;
   --color-fg: #f8f8f8;
   --color-contrast: #434A54;
+  --color-placeholder: #777;
 }
 
 @media(prefers-color-scheme: light) {
@@ -17,6 +24,7 @@
     --color-bg: #f8f8f8;
     --color-fg: #111;
     --color-contrast: #656D78;
+    --color-placeholder: #999;
   }
 }
 
@@ -26,25 +34,26 @@ body {
 }
 
 .header {
-  font-size: 2.75rem;
-  padding-bottom: 2rem;
+  font-size: 3rem;
+  grid-area: header;
+  align-self: center;
+}
+
+.container {
+  grid-area: container;
   display: grid;
+  gap: 1.8rem;
+  grid-template-columns: 40% auto;
   grid-template-areas:
-  "switch";
+  "currentWeather       ."
+  "currentWeather       ."
+  "fiveDay              fiveDay";
+  align-content: left;
+  margin-top: 24px;
 }
 
 .switch-container {
   grid-area: switch;
-}
-
-.container {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: 50% auto;
-  grid-template-areas:
-  "currentWeather       ."
-  "currentWeather       search"
-  "fiveDay              fiveDay";
 }
 
 .currentWeather {
@@ -59,7 +68,7 @@ body {
 .location {
   grid-area: location;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   padding-left: 8px;
 }
@@ -99,7 +108,8 @@ body {
   grid-area: currentConditions;
 }
 
-.searchField {
+/*.searchContainer {*/
+.searchForm {
   position: relative;
   display: inline-block;
 }
@@ -109,26 +119,31 @@ body {
   left: 8px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 18px;
-  color: #666;
+  font-size: 20px;
+  color: var(--color-bg);
   pointer-events: none;
 }
 
 .searchInput {
   grid-area: search;
-  padding-left: 30px;
+  padding-left: 48px;
   border: 1px solid #ccc;
   background-color: var(--color-contrast);
   color: var(--color-fg);
   font-weight: bold;
-  border-radius: 4px;
-  width: 80%;
-  height: 36px;
+  font-size: 1.15rem;
+  border-radius: 5px;
+  width: 86%;
+  height: 30px;
+}
+
+.searchInput::placeholder {
+  color: var(--color-placeholder);
 }
 
 .fiveDayForecast {
   grid-area: fiveDay;
-  margin-top: 0.75rem;
+  margin-top: 0.6rem;
   text-align: left;
   font-size: 1.5rem;
   font-weight: bold;
@@ -160,12 +175,13 @@ body {
 
 .forecastIcon {
   grid-area: icon;
+  text-align: center;
 }
 
 .forecastTemp{
   grid-area: temp;
-  font-size: 2.5rem;
-  text-align: end;
+  font-size: 2.4rem;
+  text-align: center;
 }
 .forecastConditions {
   grid-area: conditions;

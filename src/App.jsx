@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getInitialLocation } from './initialLocation'
+import { getInitialLocation } from './utils'
 import CurrentConditions from "./CurrentConditions"
 import Search from './Search'
 import Switch from './Switch'
@@ -12,7 +12,7 @@ function App() {
   const [location, setLocation] = useState(null)
   const [weather, setWeather] = useState(null)
   const [city, setCity] = useState(null)
-  const [celsius, setCelsius] = useState(false)
+  const [isCelsius, setisCelsius] = useState(false)
 
   useEffect(() => {
     getInitialLocation()
@@ -36,7 +36,7 @@ function App() {
       }
       setWeather(weatherData)
     } catch (error) {
-      console.log('Error fetching weather:', error)
+      console.error('Error fetching weather:', error)
     }
   }
 
@@ -53,59 +53,51 @@ function App() {
       const data = await response.json()
       return data
     } catch (error) {
-      console.log('Failed fetching city', error)
+      console.error('Failed fetching city', error)
     }
   }
 
   useEffect(() => {
-    getCityFromLocation(location)
-     .then(area => {
-      //console.log(area)
-      const locale =  (area != null && area.address.city)? area.address.city : (area != null && area.address.neighbourhood) ? area.address.neighbourhood : null
-      //console.log(locale)
-      const city = `${locale}, ${area.address.state}`
-      setCity(city)
-     }).catch(error => {
-      console.error('Error fetching city', error)
-     })
+    if (location) {
+      getCityFromLocation(location)
+      .then(area => {
+       const locale =  (area != null && area.address.city)? area.address.city : (area != null && area.address.neighbourhood) ? area.address.neighbourhood : null
+       const city = `${locale}, ${area.address.state}`
+        setCity(city)
+      }).catch(error => {
+        console.error('Error fetching city', error)
+      })
+    }
   }, [location])
 
-  const searchCity = (e) => {
-    const value = e.target.value
-    console.log(value)
-      
-    //if (value === '') {
-    //  return null
-   // } else {
-   if (value) {
-      setCity(value)
-      getWeather(value)
-    }
+  const toggleTempUnits = () => {
+    setisCelsius(!isCelsius);
   }
 
-  const toggleTempUnits = () => {
-    setCelsius(!celsius);
+  const handleSearch = (searchTerm) =>{
+    //setCity(searchTerm)
+    getWeather(searchTerm)
+    setCity(null)
   }
 
   return (
     <>
-    <div className='container'>
+      <Switch isCelsius={isCelsius} toggleTempUnits={toggleTempUnits} />
+      <Search onSearch={handleSearch} />
 
-      <Switch celsius={celsius} toggleTempUnits={toggleTempUnits} />
+      <div className='container'>
+        { location && weather ? (
+          <CurrentConditions city={city} weather={weather} isCelsius={isCelsius} />
+        ) : (
+          <div>Loading...</div>
+        )} 
 
-      { weather && city ? (
-        <CurrentConditions city={city} currentConditions={weather.currentConditions} celsius={celsius} />
-      ) : (
-        <div>Loading...</div>
-      )}    
-
-      <Search value={searchCity}  />
-
-      { weather ? (<FiveDayForecast forecast={weather} celsius={celsius} /> ) : (
-        <div>Loading...</div>
-      )}
-
-    </div>
+        { location && weather ? (
+          <FiveDayForecast forecast={weather} isCelsius={isCelsius} /> 
+        ) : (
+         <div>Loading...</div>
+        )}
+      </div>
     </>
   )
 }

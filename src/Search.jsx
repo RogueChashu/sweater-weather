@@ -1,12 +1,29 @@
+import { useState } from 'react'
 
-function Search({ value, onChange }) {
+function Search({ onSearch }) {
+  const [searchValue, setSearchValue] = useState('')
+
+  const handleSummit = (e) => {
+    e.preventDefault()
+    onSearch(searchValue)
+  }
+
+  const handleSearchValueChange = (e) => {
+    setSearchValue(e.target.value)
+  }
 
   return (
     <>
-      <form>
-
-        <div className='searchField'>
-          <span className='searchIcon'>🔍</span><input className='searchInput' placeholder='ex: New York, NY' />
+      <form className='searchForm' onSubmit={handleSummit}>
+        <div className='searchContainer'>
+          <span className='searchIcon'>🔍</span>
+            <input 
+              type='search'
+              value={searchValue} 
+              onChange={handleSearchValueChange} 
+              className='searchInput' 
+              placeholder='ex: New York, NY' 
+            />
         </div>
       </form>
     </>
