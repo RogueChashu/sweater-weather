@@ -1,14 +1,18 @@
 import { useState } from 'react'
 
-function Search({ onSearch }) {
+type searchProp = {
+  onSearch: (searchTerm: string ) => void; // ex: 'New York'. Even GPS coords are string type as they
+}                                          // come out of <input>. They are processed and typed as number inside onSearch.
+
+const Search = ({ onSearch }: searchProp): JSX.Element => {
   const [searchValue, setSearchValue] = useState('')
 
-  const handleSummit = (e) => {
+  const handleSummit = (e: React.FormEvent<HTMLFormElement>): void => { // feeds the search term to the form
     e.preventDefault()
     onSearch(searchValue)
   }
 
-  const handleSearchValueChange = (e) => {
+  const handleSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>): void => { // handles the search display change
     setSearchValue(e.target.value)
   }
 

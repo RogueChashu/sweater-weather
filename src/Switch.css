@@ -43,8 +43,8 @@
   display: inline-block;
   position: relative;
   cursor: pointer;
-  width: 56px;
-  height: 18px;
+  width: 52px;
+  height: 16px;
   border-radius: 20px;
   border: 2px solid #818181;
   transition: background 0.9s ease-in-out;
@@ -60,7 +60,7 @@
 }
 
 .switch-thumb {
-  height: 24px;
+  height: 20px;
   aspect-ratio: 1/1;
   position: absolute;
   top: -4px;

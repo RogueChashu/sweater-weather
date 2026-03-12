@@ -1,4 +1,9 @@
-const Switch = ({ isCelsius, toggleTempUnits }) => {
+type SwitchProps = {
+  isCelsius: boolean;
+  toggleTempUnits: () => void;    // function that returns nothing
+}
+
+const Switch = ({ isCelsius, toggleTempUnits }: SwitchProps): JSX.Element => {
 
   return (
     <div className='switch-container'>

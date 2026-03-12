@@ -79,7 +79,7 @@ body {
   border: 1px #444 solid;
   border-radius: 6px;
   margin: 4px;
-  padding: 12px;
+  padding: 12px;                        /* SAME PADDING AS MARGIN?? */
   background-color: var(--color-contrast);
   font-size: 1.35rem;
   font-weight: normal;
@@ -88,10 +88,10 @@ body {
 .currentContainer {
   grid-area: currentContainer;
   display: grid;
-  gap: 12px;
+  gap: 16px;
   grid-template-columns: 0.7fr 0.7fr 1.25fr;
   grid-template-areas: 
-  "icon   temp    currenConditions";
+  "icon   temp    currentConditions";
 }
 
 .weatherIcon {
@@ -104,8 +104,9 @@ body {
   margin-left: 24px;
 }
 
-.curentConditions {
+.currentConditions {
   grid-area: currentConditions;
+  margin-left: 4px;
 }
 
 /*.searchContainer {*/
