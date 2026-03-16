@@ -1,7 +1,7 @@
 const Header = (): JSX.Element => {
   return (
     <>
-      <div className='header'>⛅ Weather hoolala</div>
+      <header><h1>⛅ Weather hoolala</h1></header>
     </>
   );
 };

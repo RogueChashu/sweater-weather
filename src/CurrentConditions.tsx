@@ -16,15 +16,16 @@ const CurrentLocation = ({  weather, isCelsius }: CurrentConditionsProps): JSX.E
   // property if you provide a city/town name, as opposed to GPS coords.
   return (
     <>
-      <div className='currentWeather'>
-        <div className='location'>{(weather) ? weather.resolvedAddress : null}</div>
+      <section className='currentWeather'>
+        <h2 className='visually-hidden'>Current conditions</h2>
+        <div className='location'><h3>{(weather) ? weather.resolvedAddress : null}</h3></div>
 
         <div className='currentContainer weatherContainer'>
-          <div className='weatherIcon'><img src={getIcon(currentWeather.icon)} /></div>
+          <div className='weatherIcon'><img src={getIcon(currentWeather.icon)} alt={currentWeather.icon} /></div>
           <div className='tempValue'>{temperature}{isCelsius? '°C' : '°F'} </div>
           <div className='currentConditions'>{currentWeather.conditions}</div>
         </div>
-      </div>
+      </section>
     </>
   )
 }

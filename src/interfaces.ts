@@ -32,4 +32,3 @@ export interface weatherAPIResponseType {
   }
   days: DaysForecastType;
 } 
-type bob = Partial<weatherAPIResponseType>

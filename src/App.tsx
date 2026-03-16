@@ -6,6 +6,7 @@ import Switch from './Switch';
 import './Switch.css';
 import FiveDayForecast from './FiveDayForecast';
 import { GPSCoordinatesType, CityAPIResponseType, weatherAPIResponseType } from './interfaces';
+import Header from './Header';
 
 const weatherApiKey = 'GXQN64TQL2DSWWEQ7X6YGXNP2'
 
@@ -115,10 +116,11 @@ function App() {
 
   return (
     <>
+      <Header />
       <Switch isCelsius={isCelsius} toggleTempUnits={toggleTempUnits} /> 
       <Search onSearch={handleSearch} />
 
-      <div className='container'>
+      <main>
         { weather ? (
           <CurrentConditions weather={weather} isCelsius={isCelsius} />
         ) : (
@@ -130,7 +132,7 @@ function App() {
         ) : (
          <div>One moment please...</div>
         ) } 
-      </div>
+      </main>
     </>
   )
 }
