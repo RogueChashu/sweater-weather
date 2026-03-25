@@ -115,24 +115,27 @@ function App() {
   const fiveDayForecastData = weather?.days?.slice(0,5);
 
   return (
-    <>
-      <Header />
-      <Switch isCelsius={isCelsius} toggleTempUnits={toggleTempUnits} /> 
-      <Search onSearch={handleSearch} />
+    <> 
+      <div className='app-container'>
+        <Header />
+        <div className='controls'>
+          <Search onSearch={handleSearch} />
+          <Switch isCelsius={isCelsius} toggleTempUnits={toggleTempUnits} /> 
+        </div>
+        <main>
+          { weather ? (
+            <CurrentConditions weather={weather} isCelsius={isCelsius} />
+          ) : (
+            <div>One moment please...</div>
+          )} 
 
-      <main>
-        { weather ? (
-          <CurrentConditions weather={weather} isCelsius={isCelsius} />
-        ) : (
+          { fiveDayForecastData ? (
+            <FiveDayForecast fiveDayForecastData={fiveDayForecastData} isCelsius={isCelsius} /> 
+          ) : (
           <div>One moment please...</div>
-        )} 
-
-        { fiveDayForecastData ? (
-          <FiveDayForecast fiveDayForecastData={fiveDayForecastData} isCelsius={isCelsius} /> 
-        ) : (
-         <div>One moment please...</div>
-        ) } 
-      </main>
+          ) } 
+        </main>
+      </div>
     </>
   )
 }

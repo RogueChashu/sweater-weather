@@ -18,9 +18,10 @@ const Search = ({ onSearch }: searchProp): JSX.Element => {
 
   return (
     <>
-      <form className='searchForm' onSubmit={handleSummit}>
+      <form id='searchForm' onSubmit={handleSummit}>
         <div className='searchContainer'>
           <span className='searchIcon'>🔍</span>
+            <h4>
             <input 
               type='search'
               value={searchValue} 
@@ -28,6 +29,7 @@ const Search = ({ onSearch }: searchProp): JSX.Element => {
               className='searchInput' 
               placeholder='ex: New York, NY' 
             />
+            </h4>
         </div>
       </form>
     </>

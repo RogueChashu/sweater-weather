@@ -12,10 +12,14 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .switch-container {
   display: inline-block;
   position: relative;
-  justify-self: end;
+  justify-items: end;
   font-family: 'Arial';
   padding: 4px;
 }
@@ -26,17 +30,16 @@
 }
 
 .switch-label-left,.switch-label-right {
-  font-size: 20px;
   font-weight: bold;
   color: var(--color-fg);
 }
 
 .switch-label-left {
-  margin: 0 8px 0 0;
+  margin-right: 0.3rem;
 }
 
 .switch-label-right {
-  margin: 0 0 0 5px;
+  margin-left: 0.4rem;
 }
 
 .switch {
@@ -51,7 +54,7 @@
 }
 
 .switch.unchecked {
-  background: linear-gradient(to top, #828282, #d4d4d4);
+  background: radial-gradient(to top, #828282, #d4d4d4);
 }
 
 .switch.checked {
@@ -65,7 +68,7 @@
   position: absolute;
   top: -4px;
   left: -6px;
-  background: radial-gradient(#eeeeee, #cccccc, #828282);
+  background: radial-gradient(#eee, #bbb, #828282);
   border-radius: 50%;
   border: 2px solid #919191;
   transition: transform 0.3s ease-in-out;

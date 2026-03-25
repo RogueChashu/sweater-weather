@@ -22,8 +22,8 @@ const CurrentLocation = ({  weather, isCelsius }: CurrentConditionsProps): JSX.E
 
         <div className='currentContainer weatherContainer'>
           <div className='weatherIcon'><img src={getIcon(currentWeather.icon)} alt={currentWeather.icon} /></div>
-          <div className='tempValue'>{temperature}{isCelsius? '°C' : '°F'} </div>
-          <div className='currentConditions'>{currentWeather.conditions}</div>
+          <p className='tempValue'>{temperature}{isCelsius? '°C' : '°F'} </p>
+          <p className='currentConditions'>{currentWeather.conditions}</p>
         </div>
       </section>
     </>
