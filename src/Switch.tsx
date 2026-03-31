@@ -2,20 +2,21 @@ type SwitchProps = {
   isCelsius: boolean;
   toggleTempUnits: () => void;    // function that returns nothing
 }
+//        <div className='switch-labels'>
+
 
 const Switch = ({ isCelsius, toggleTempUnits }: SwitchProps): JSX.Element => {
 
   return (
     <div className='switch-container'>
-        <div className='switch-labels'>
-          <span className='switch-label-left'>°F</span>
           <div
             className={`switch ${isCelsius? 'checked' : 'unchecked'}`}
             onClick={toggleTempUnits}
           >
-            <div className="switch-thumb" />
-        </div>
-          <span className='switch-label-right'>°C</span>
+            <div className="switch-thumb">
+              <span className='switch-label'>{isCelsius? '°C' : '°F'}</span>
+            </div>
+ 
         </div>
     </div>
   )

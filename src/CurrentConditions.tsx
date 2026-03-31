@@ -18,12 +18,12 @@ const CurrentLocation = ({  weather, isCelsius }: CurrentConditionsProps): JSX.E
     <>
       <section className='currentWeather'>
         <h2 className='visually-hidden'>Current conditions</h2>
-        <div className='location'><h3>{(weather) ? weather.resolvedAddress : null}</h3></div>
+        <div className='location'>{(weather) ? weather.resolvedAddress : null}</div>
 
         <div className='currentContainer weatherContainer'>
           <div className='weatherIcon'><img src={getIcon(currentWeather.icon)} alt={currentWeather.icon} /></div>
-          <p className='tempValue'>{temperature}{isCelsius? '°C' : '°F'} </p>
-          <p className='currentConditions'>{currentWeather.conditions}</p>
+            <p className='tempValue'>{temperature}{isCelsius? '°C' : '°F'} </p>
+            <p className='currentConditions'>{currentWeather.conditions}</p>
         </div>
       </section>
     </>

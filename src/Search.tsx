@@ -21,15 +21,13 @@ const Search = ({ onSearch }: searchProp): JSX.Element => {
       <form id='searchForm' onSubmit={handleSummit}>
         <div className='searchContainer'>
           <span className='searchIcon'>🔍</span>
-            <h4>
             <input 
               type='search'
               value={searchValue} 
               onChange={handleSearchValueChange} 
-              className='searchInput' 
+              id='searchInput' 
               placeholder='ex: New York, NY' 
             />
-            </h4>
         </div>
       </form>
     </>

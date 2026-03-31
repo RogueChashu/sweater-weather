@@ -1,4 +1,4 @@
-import { convertTemperature, dateFormatting, getIcon, getWeekday } from './utils'
+import { convertTemperature, getIcon, getWeekday } from './utils'
 import { DaysForecastType } from './interfaces'
 
 type FiveDayForecastProps = {
