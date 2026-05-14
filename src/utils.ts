@@ -1,7 +1,6 @@
 import {format, parse} from 'date-fns'
 import { GPSCoordinatesType } from './interfaces'
 
-
 async function getInitialCoord (): Promise<GPSCoordinatesType> {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(position => {
@@ -31,7 +30,6 @@ const getIcon = (iconNeeded: string): string => {
 }
 
 const getWeekday = (date:string): string => {
-  // .map(Number) converts the array of strings into an array of numbers
   const [year, month, day] = date.split('-').map(Number);
   const dayOfTheWeek = new Date(year, month - 1, day);
   const today = new Date();

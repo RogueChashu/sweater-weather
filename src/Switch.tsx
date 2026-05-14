@@ -2,8 +2,6 @@ type SwitchProps = {
   isCelsius: boolean;
   toggleTempUnits: () => void;    // function that returns nothing
 }
-//        <div className='switch-labels'>
-
 
 const Switch = ({ isCelsius, toggleTempUnits }: SwitchProps): JSX.Element => {
 
