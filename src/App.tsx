@@ -38,7 +38,9 @@ function App() {
 
   const getCityFromGPSCoord = async (gpsCoord:GPSCoordinatesType): Promise<CityAPIResponseType> => {
     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${gpsCoord.latitude}&lon=${gpsCoord.longitude}&zoom=18&addressdetails=1`)
+    if (!response.ok) throw new Error('Geocoding failed: ${response.status}');
     const data = await response.json();
+    if (!data?.address) throw new Error('Unexpected geocoding response');
     return data;
   }
 
@@ -71,19 +73,25 @@ function App() {
 
     const getWeather = async (city: string) => {
       try {
-        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=${weatherApiKey}`)
+        const response = await fetch(`/api/weather?location=${city}`);
     
         if (!response.ok) {
-          throw new Error(`Failed to fetch weather data: ${response.statusText}`);
+          throw new Error(`No result found`);
         }
         const weatherData = await response.json();
     
         if (weatherData ==  null) {
           throw new Error('Failed to parse weather data');
         }
-        setWeather(weatherData)
-      } catch (error) {        
-        console.error('Error fetching weather data:', error);
+        setWeather(weatherData);
+        setSearchError(null);
+      } catch (error) { 
+        if (error instanceof Error) {
+          console.log(error.message)
+          setSearchError(error.message);
+        } else {     
+          setSearchError('An unknown error occured');
+        }
       }
     }
     getWeather(city);
@@ -94,6 +102,13 @@ function App() {
   }
 
   const handleSearch = (searchTerm: string ) => {
+
+    if (!searchTerm.trim()) {
+      setSearchError('Please enter a city, zip code, or GPS coordinates');
+      return;
+    }
+    setSearchError(null);
+
     // regex rule for checking if search term is a valid GPS coord (ex: lat: -90 to 90, lon: -180 to 180)
     const gpsRegex = /^-?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*-?((1[0-7]\d(\.\d+)?|180(\.0+)?)|([1-9]?\d(\.\d+)?))$/;
 
@@ -119,7 +134,7 @@ function App() {
       <div className='app-container'>
         <Header />
         <div className='controls'>
-          <Search onSearch={handleSearch} />
+          <Search onSearch={handleSearch} searchError={searchError} />
           <Switch isCelsius={isCelsius} toggleTempUnits={toggleTempUnits} /> 
         </div>
         <main>
