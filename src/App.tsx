@@ -8,13 +8,13 @@ import FiveDayForecast from './FiveDayForecast';
 import { GPSCoordinatesType, CityAPIResponseType, weatherAPIResponseType } from './interfaces';
 import Header from './Header';
 
-const weatherApiKey = 'GXQN64TQL2DSWWEQ7X6YGXNP2'
 
 function App() {
   const [gpsCoord, setGpsCoord] = useState<GPSCoordinatesType | null>(null);
   const [weather, setWeather] = useState<weatherAPIResponseType | null>(null);
   const [city, setCity] = useState<string | null>(null);
   const [isCelsius, setIsCelsius] = useState<boolean>(true);
+  const [searchError, setSearchError] = useState<string | null>(null);
  
   /*
   Loading time steps:
