@@ -2,9 +2,12 @@ import { useState } from 'react'
 
 type searchProp = {
   onSearch: (searchTerm: string ) => void; // ex: 'New York'. Even GPS coords are string type as they
-}                                          // come out of <input>. They are processed and typed as number inside onSearch.
+                                           // come out of <input>. They are processed and typed as number inside onSearch.
+  searchError: string | null;
+}
 
-const Search = ({ onSearch }: searchProp): JSX.Element => {
+
+const Search = ({ onSearch, searchError }: searchProp): JSX.Element => {
   const [searchValue, setSearchValue] = useState('')
 
   const handleSummit = (e: React.FormEvent<HTMLFormElement>): void => { // feeds the search term to the form
@@ -23,12 +26,13 @@ const Search = ({ onSearch }: searchProp): JSX.Element => {
           <span className='searchIcon'>🔍</span>
             <input 
               type='search'
-              value={searchValue} 
+              value={searchValue}
               onChange={handleSearchValueChange} 
               id='searchInput' 
               placeholder='ex: New York, NY' 
             />
         </div>
+        <p className='error-message'>{searchError}</p>
       </form>
     </>
   )
