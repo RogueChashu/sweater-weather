@@ -37,12 +37,11 @@
   align-items: center;
   position: relative;
   cursor: pointer;
-  height: 36px;
-  width: 94px;
+  height: 38px;
+  width: 78px;
   border-radius: 20px;
   transition: background 0.3s ease-in-out;
   padding: 6px;
-
 }
 
 .switch.unchecked {
@@ -58,8 +57,8 @@
 }
 
 .switch-thumb {
-  height: 28px;
-  width: 48px;
+  height: 30px;
+  width: 42px;
   position: absolute;
   top: 3px;
   left: 3px;
@@ -80,5 +79,20 @@
 } 
 
 .switch.checked .switch-thumb {
-  transform: translateX(38px);
+  transform: translateX(28px);
+}
+
+@media (min-width: 768px) {
+  .switch {
+    height: 34px;
+    width: 72px;
+  }
+
+  .switch-thumb {
+    height: 26px;
+    width: 36px;
+    top: 3px;
+    left: 3px;
+  }
+
 }

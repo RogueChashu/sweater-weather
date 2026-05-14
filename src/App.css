@@ -37,14 +37,17 @@
 body {
   background-color: var(--color-bg);
   min-width: 375px;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 #root {
   max-width: 1440px;
-  margin: 0px;
+  margin: 0px auto;
   font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
   height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   background-color: var(--color-bg);
 }
  
@@ -63,7 +66,8 @@ body {
 }
 
 .app-container {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   height: auto;
   color: var(--color-font);
   display: flex;
@@ -90,20 +94,24 @@ h3 {
 
 .controls {
   display: flex;
-  gap: 3vw;
+  gap: 2vw;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   height: fit-content;
+  width: 100%;
 }
 
 #searchForm {
-  position: relative;
-  display: inline-block;
+  flex-grow: 1;
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
 .searchContainer {
-  flex: 10;
+  position: relative;
+  flex-grow: 1;
   height: 100%;
   justify-self: end;
 }
@@ -133,8 +141,16 @@ h3 {
   color: var(--color-search-placeholder);
 }
 
+.error-message {
+  padding: 0.3rem 0 0 0.35rem;
+  min-height: 1.2em;
+  color: red;
+  font-size: var(--tiny-font);
+  opacity: 1;
+}
+
 .switch-container {
-  width: min-content;
+  flex: 0 0 auto;
 }
 
 .switch-labels {
@@ -247,42 +263,38 @@ main {
 
   .app-container {
     width: 100%;
-    color: var(--color-font);
-    background-color: var(--color-bg);
     display: grid;
     grid-template-areas: 
     "header     control"
     "main       main";
-    grid-template-columns: 1fr 0.65fr;
-    grid-template-rows: auto;
-    gap: 3vh;
+    grid-template-columns: 1fr 0.73fr;
+    grid-template-rows: min-content;
+    gap: 3.5vh;
+    align-items: start;
+  }
+
+  header {
+    align-self: flex-start;
   }
 
   .controls {
     grid-area: control;
-    display: flex;
-    flex-direction: column;
-    min-height: fit-content;
     font-size: var(--tiny-font);
-    gap: 0.5vh;
-    align-items: end;
-  }
-
-  #searchForm{
-    width: 90%;
-    min-height: 23px;
-  }
-
-  .searchContainer {
+    gap: 1.2vh;
+    justify-content: end; 
     width: 100%;
-    justify-self: start;
+  }
+
+  #searchForm {
+    flex: 1;
+    max-width: 75%;
   }
 
   main {
     grid-area: main;
     display: flex;
     flex-direction: column;
-    gap: 3vh;
+    gap: 3.5vh;
   }
 
   .currentContainer {
@@ -301,20 +313,11 @@ main {
 }
 
 @media (min-width: 1200px) {
-  #root {
-    margin: 0 auto;
-  }
-
-  .controls {
-    flex-direction: row;
-    align-content: baseline;
-  }
 
   #searchForm{
-    width: 65%;
+    max-width: 65%;
     min-height: 23px;
   }
-
 
   .app-container {
     gap: 3vh;
