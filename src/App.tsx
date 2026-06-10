@@ -5,13 +5,13 @@ import Search from './Search';
 import Switch from './Switch';
 import './Switch.css';
 import FiveDayForecast from './FiveDayForecast';
-import { GPSCoordinatesType, weatherAPIResponseType, GeocodingAPIResponseType, GeocodingProperties } from './interfaces';
+import { GPSCoordinatesType, WeatherAPIResponseType, GeocodingAPIResponseType, GeocodingProperties } from './interfaces';
 import Header from './Header';
 
 
 function App() {
   const [gpsCoord, setGpsCoord] = useState<GPSCoordinatesType | null>(null);
-  const [weather, setWeather] = useState<weatherAPIResponseType | null>(null);
+  const [weather, setWeather] = useState<WeatherAPIResponseType | null>(null);
   const [displayLocation, setDisplayLocation] = useState<string | null>(null);
   const [isCelsius, setIsCelsius] = useState<boolean>(true);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -45,7 +45,7 @@ function App() {
         if (!response.ok) {
           throw new Error(`No result found`);
         }
-        const weatherData: weatherAPIResponseType = await response.json();
+        const weatherData: WeatherAPIResponseType = await response.json();
     
         if (weatherData ==  null) {
           throw new Error('Failed to parse weather data');

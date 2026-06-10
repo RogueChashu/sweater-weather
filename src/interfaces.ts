@@ -1,9 +1,9 @@
-export interface GPSCoordinatesType {
+export type GPSCoordinatesType = {
   latitude: number;         
   longitude: number;
 }
 
-export interface DaysForecast  {
+export type DaysForecast = {
   datetime: string;       // ex: "2025-10-10" year-month-day
   icon: string;           // ex: "clear-day"
   temp: number;           // ex: 48.5 (comes in °F by default)
@@ -14,7 +14,7 @@ export interface DaysForecast  {
 
 export type DaysForecastType = DaysForecast[];
 
-export interface weatherAPIResponseType {
+export type WeatherAPIResponseType = {
   resolvedAddress: string;
   currentConditions: {
     icon: string;               // ex: "clear-day"

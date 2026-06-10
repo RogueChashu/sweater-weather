@@ -1,9 +1,9 @@
 import { convertTemperature, getIcon } from './utils';
-import { weatherAPIResponseType } from './interfaces';
+import { WeatherAPIResponseType } from './interfaces';
 
 type CurrentConditionsProps = {
   displayLocation: string;
-  weather: weatherAPIResponseType;
+  weather: WeatherAPIResponseType;
   isCelsius: boolean;
 }
 
