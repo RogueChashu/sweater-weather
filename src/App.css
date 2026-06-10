@@ -142,12 +142,53 @@ h3 {
   color: var(--color-search-placeholder);
 }
 
+.searchReset {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.searchReset > button {
+  color: black;
+  padding: 3px;
+  font-weight: bolder;
+}
+
+.searchSuggestions {
+  position: relative;
+}
+
+.searchSuggestions > ul {
+  position: absolute;
+  background-color: var(--color-bg-search);
+  border-radius: 6px;
+  border: var(--search-border);
+  list-style-type: none;
+  padding: 6px 12px;
+  width: 100%;
+}
+
+.searchSuggestions > ul > li {
+  padding: 6px 0px;
+  font-size: 1rem;
+}
+
+.searchSuggestions > ul > li:hover {
+  background-color: var(--border-cards);
+}
+
 .error-message {
-  padding: 0.3rem 0 0 0.35rem;
-  min-height: 1.2em;
+  padding: 0 0 0 0.35rem;
+  min-height: 1.2rem;
   color: red;
   font-size: var(--tiny-font);
-  opacity: 1;
+  font-weight: 500;
+  visibility: hidden;
+}
+
+.error-message.visible {
+  visibility: visible;
 }
 
 .switch-container {
