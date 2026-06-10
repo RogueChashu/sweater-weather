@@ -5,7 +5,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { location } = req.query;
 
   if (!location || typeof location !== 'string') {
-    return res.status(400).json({ error: 'Location paramater is required' });
+    return res.status(400).json({ error: 'Location parameter is required' });
   }
 
   // 2. Get the API key from the environment variables

@@ -5,7 +5,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { lat, lon } = req.query;
 
   if (!lat || !lon || typeof lat !== 'string' || typeof lon !== 'string') {
-    return res.status(400).json({ error: 'Latitude and longitude paramaters are required' });
+    return res.status(400).json({ error: 'Latitude and longitude parameters are required' });
   }
 
   // 2. Get the API key from the environment variables
