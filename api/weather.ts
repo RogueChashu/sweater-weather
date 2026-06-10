@@ -35,8 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.error('Weather fetch error', error.message);
     } else {
       console.error('An unknown error occured', error);
+      return res.status(500).json({ error: 'Failed to fetch weather data' });
     }
-
-    return res.status(500).json({ error: 'Failed to fetch weather data' });
   }
 }

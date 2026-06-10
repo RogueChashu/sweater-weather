@@ -35,12 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json(data);
     
   } catch (error) {
-    if (error instanceof Error) {
-      console.error('Geolocation fetch error', error.message);
-    } else {
-      console.error('An unknown error occured', error);
-    }
-
-    return res.status(500).json({ error: 'Failed to fetch location data' });
+      console.error('Geolocation fetch error', error);
+      return res.status(500).json({ error: 'Failed to fetch location data' });
   }
 }
