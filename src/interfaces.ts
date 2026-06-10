@@ -33,7 +33,6 @@ export type GeocodingProperties = {
   lon: number;
 }
 
-
 export type GeocodingData = {
   properties: GeocodingProperties;
 }
