@@ -37,8 +37,8 @@
   align-items: center;
   position: relative;
   cursor: pointer;
-  height: 38px;
-  width: 78px;
+  height: 36px;
+  width: 76px;
   border-radius: 20px;
   transition: background 0.3s ease-in-out;
   padding: 6px;
@@ -58,9 +58,9 @@
 
 .switch-thumb {
   height: 30px;
-  width: 42px;
+  width: 40px;
   position: absolute;
-  top: 3px;
+  top: 2px;
   left: 3px;
   background: var(--thumb-bg);
   border-radius: 20px;
@@ -85,14 +85,14 @@
 @media (min-width: 768px) {
   .switch {
     height: 34px;
-    width: 72px;
+    width: 70px;
   }
 
   .switch-thumb {
     height: 26px;
     width: 36px;
     top: 3px;
-    left: 3px;
+    left: 2px;
   }
 
 }
