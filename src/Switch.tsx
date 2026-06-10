@@ -1,6 +1,6 @@
 type SwitchProps = {
   isCelsius: boolean;
-  toggleTempUnits: () => void;    // function that returns nothing
+  toggleTempUnits: () => void;    // returns nothing
 }
 
 const Switch = ({ isCelsius, toggleTempUnits }: SwitchProps): JSX.Element => {
