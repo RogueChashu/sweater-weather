@@ -36,49 +36,20 @@ function App() {
       .catch(error => console.error(error));
   }, []); // Only needed at loading time, not needed afterwards, hence the empty dependency
 
-  const getCityFromGPSCoord = async (gpsCoord:GPSCoordinatesType): Promise<CityAPIResponseType> => {
-    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${gpsCoord.latitude}&lon=${gpsCoord.longitude}&zoom=18&addressdetails=1`)
-    if (!response.ok) throw new Error('Geocoding failed: ${response.status}');
-    const data = await response.json();
-    if (!data?.address) throw new Error('Unexpected geocoding response');
-    return data;
-  }
-
-  // Weather API does not provide city name if search was done by GPS coords, usually it returns the GPS coords.
-  // Sometimes, it can return a broad area at best. In order to display a proper city/town, we must reverse geolocate:
+ 
+  // Weather is fetched using GPS coords directly. For a well formatted location name, another API 
+  // is called through the getLocationName function below.
   useEffect(() => {
-    const fetchAndSetCityData = async () => {
-      if (gpsCoord == null) return;
+    if (gpsCoord == null) return;
 
+    const getWeather = async (gpsCoord:GPSCoordinatesType) => {
       try {
-        const cityData = await getCityFromGPSCoord(gpsCoord);
-            
-        const locale = 
-          cityData.address.city ?? 
-          cityData.address.neighbourhood ?? 
-          cityData.address.town;
-        const completeCityData = `${locale}, ${cityData.address.state}`;
-        setCity(completeCityData)
-      } catch (error) {
-        console.error("Problem while fetching city data:", error);
-      }
-    }
-    fetchAndSetCityData();
-  }, [gpsCoord])
-
-  // Weather could be fetched using GPS coords directly, but since it doesn't return a city or a town to display, 
-  // it was chosen to fetch weather data by city, so we obtain a well formatted city/town ready to display.
-  useEffect(() => {
-    if (city == null) return;
-
-    const getWeather = async (city: string) => {
-      try {
-        const response = await fetch(`/api/weather?location=${city}`);
+        const response = await fetch(`/api/weather?lat=${gpsCoord.latitude}&lon=${gpsCoord.longitude}`);
     
         if (!response.ok) {
           throw new Error(`No result found`);
         }
-        const weatherData = await response.json();
+        const weatherData: weatherAPIResponseType = await response.json();
     
         if (weatherData ==  null) {
           throw new Error('Failed to parse weather data');
