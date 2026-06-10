@@ -3,15 +3,6 @@ export interface GPSCoordinatesType {
   longitude: number;
 }
 
-export interface CityAPIResponseType {
-  address: {
-    city?: string;              // Sometimes, the reverse geolocation API provides a city, 
-    neighbourhood?: string;     // other times, a neighbourhood or a town.
-    town?: string;
-    state: string;
-  }
-}
-
 export interface DaysForecast  {
   datetime: string;       // ex: "2025-10-10" year-month-day
   icon: string;           // ex: "clear-day"
@@ -32,3 +23,21 @@ export interface weatherAPIResponseType {
   }
   days: DaysForecastType;
 } 
+
+export type GeocodingProperties = {
+  city: string;
+  address_line1: string;
+  state_code: string;
+  country: string;
+  lat: number;
+  lon: number;
+}
+
+
+export type GeocodingData = {
+  properties: GeocodingProperties;
+}
+
+export type GeocodingAPIResponseType = {
+  features: GeocodingData[];
+}
