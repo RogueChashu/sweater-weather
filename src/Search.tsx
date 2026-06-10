@@ -1,38 +1,115 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react';
+import { GPSCoordinatesType, GeocodingAPIResponseType, GeocodingData, GeocodingProperties } from './interfaces';
 
 type searchProp = {
-  onSearch: (searchTerm: string ) => void; // ex: 'New York'. Even GPS coords are string type as they
-                                           // come out of <input>. They are processed and typed as number inside onSearch.
   searchError: string | null;
+  setSearchError: React.Dispatch<React.SetStateAction<string | null>>;
+  setGpsCoord: React.Dispatch<React.SetStateAction<GPSCoordinatesType | null>>
+  setDisplayLocation: React.Dispatch<React.SetStateAction<string | null>>
 }
 
+const Search = ({ searchError, setSearchError, setGpsCoord, setDisplayLocation }: searchProp): JSX.Element => {
+  // searchValue: value of input field. It cannot be null, so default is ''.
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<GeocodingData[]>([]);//string[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
-const Search = ({ onSearch, searchError }: searchProp): JSX.Element => {
-  const [searchValue, setSearchValue] = useState('')
-
-  const handleSummit = (e: React.FormEvent<HTMLFormElement>): void => { // feeds the search term to the form
+  // pressing 'Enter' will select the first suggestion for weather search
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    onSearch(searchValue)
+    if (suggestions.length > 0) {
+      handleSelectAddress(suggestions[0].properties);
+    }
   }
 
-  const handleSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>): void => { // handles the search display change
-    setSearchValue(e.target.value)
-  }
+  useEffect(() => { 
+    if (searchValue.trim().length < 3 || isSearching == false) {
+      setSuggestions([]);
+      setSearchError(null);
+      return;
+    }
+    
+    const delayDebounceFn = setTimeout(async () => { 
+      try {
+        const response = await fetch(`/api/geocoding?location=${searchValue}`);
+
+        const data: GeocodingAPIResponseType = await response.json();
+        setSuggestions(data.features || []);
+
+        if (suggestions.length === 0) {
+          setSearchError('No results found');
+        }
+      } catch (error) {
+        console.error("Error fetching addresses:", error);
+      }
+    }, 250);
+
+    // If searchValue changes before the 250ms, cancel the previous timer
+    return () => clearTimeout(delayDebounceFn);
+
+  }, [searchValue]);
+
+  const handleReset = () => {
+    // Clearing searchValue will trigger the useEffect, which will hit the guard
+    // clause and call setSuggestion([]);
+    setSearchValue('');
+    setSearchError(null);
+  };
+
+  const handleSearchTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+    setIsSearching(true);
+  };
+
+  // City/address is saved in state for UI display, 
+  // GPS coord are saved in state for weather search.
+  const handleSelectAddress = (locationData: GeocodingProperties) => {
+    const { city, address_line1, state_code, country, lat, lon } = locationData;
+    const cityDisplay = 
+      `${city ? city : address_line1}, ${state_code ? state_code : ''}, ${country}`;
+
+    setDisplayLocation(cityDisplay);
+    setGpsCoord({ latitude: lat, longitude: lon });
+    setSearchValue(cityDisplay);
+    setSuggestions([]);
+    setIsSearching(false); 
+  };
 
   return (
     <>
-      <form id='searchForm' onSubmit={handleSummit}>
+      <form id='searchForm' onSubmit={handleSubmit}>
         <div className='searchContainer'>
           <span className='searchIcon'>🔍</span>
             <input 
-              type='search'
+              type='text'
+              placeholder='Search city...' 
               value={searchValue}
-              onChange={handleSearchValueChange} 
+              onChange={(e) => handleSearchTyping(e)}
               id='searchInput' 
-              placeholder='ex: New York, NY' 
             />
+          <span className='searchReset'>{searchValue && <button type='button' onClick={handleReset}>X</button>}</span>         
         </div>
-        <p className='error-message'>{searchError}</p>
+        <div className='searchSuggestions'>
+          {suggestions.length > 0 && (
+            <ul className='dropdown'>
+              {suggestions.map((feature, i) => {
+                const { city, address_line1, state_code, country } = feature.properties;
+                return (
+                  <li 
+                    className='autocompleteOptions' 
+                    key={i} 
+                    onClick={() => handleSelectAddress(feature.properties)}
+                  >
+                    📍 {city ? `${city}, ` :  `${address_line1}, `}
+                    {state_code ? `${state_code}, ` : ''}
+                    {country}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+        <p className={`error-message ${searchError ? 'visible' : ''}`}>{searchError}</p>
       </form>
     </>
   )
