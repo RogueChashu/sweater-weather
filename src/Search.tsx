@@ -34,10 +34,14 @@ const Search = ({ searchError, setSearchError, setGpsCoord, setDisplayLocation }
         const response = await fetch(`/api/geocoding?location=${searchValue}`);
 
         const data: GeocodingAPIResponseType = await response.json();
-        setSuggestions(data.features || []);
+        const features = data.features || [];
 
-        if (suggestions.length === 0) {
+        setSuggestions(features);
+
+        if (features.length === 0) {
           setSearchError('No results found');
+        } else {
+          setSearchError(null);
         }
       } catch (error) {
         console.error("Error fetching addresses:", error);
