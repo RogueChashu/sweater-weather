@@ -13,6 +13,7 @@ const Search = ({ searchError, setSearchError, setGpsCoord, setDisplayLocation }
   const [searchValue, setSearchValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<GeocodingData[]>([]);//string[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // pressing 'Enter' will select the first suggestion for weather search
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -23,19 +24,20 @@ const Search = ({ searchError, setSearchError, setGpsCoord, setDisplayLocation }
   }
 
   useEffect(() => { 
-    if (searchValue.trim().length < 3 || isSearching == false) {
+    if (searchValue.trim().length < 2 || !isSearching) {
       setSuggestions([]);
       setSearchError(null);
       return;
     }
     
+    const delay = 150;
+
     const delayDebounceFn = setTimeout(async () => { 
       try {
+        setIsLoading(true);
         const response = await fetch(`/api/geocoding?location=${searchValue}`);
-
         const data: GeocodingAPIResponseType = await response.json();
         const features = data.features || [];
-
         setSuggestions(features);
 
         if (features.length === 0) {
@@ -45,10 +47,12 @@ const Search = ({ searchError, setSearchError, setGpsCoord, setDisplayLocation }
         }
       } catch (error) {
         console.error("Error fetching addresses:", error);
+      } finally {
+        setIsLoading(false);
       }
-    }, 250);
+    }, delay);
 
-    // If searchValue changes before the 250ms, cancel the previous timer
+    // If searchValue changes before the 150ms, cancel the previous timer
     return () => clearTimeout(delayDebounceFn);
 
   }, [searchValue]);
@@ -113,7 +117,7 @@ const Search = ({ searchError, setSearchError, setGpsCoord, setDisplayLocation }
             </ul>
           )}
         </div>
-        <p className={`error-message ${searchError ? 'visible' : ''}`}>{searchError}</p>
+        <p className={`error-message ${searchError && isLoading ? 'visible' : ''}`}>{searchError}</p>
       </form>
     </>
   )
