@@ -98,7 +98,12 @@ const Search = ({ searchError, setSearchError, setGpsCoord, setDisplayLocation }
           <span className='searchReset'>{searchValue && <button type='button' onClick={handleReset}>X</button>}</span>         
         </div>
         <div className='searchSuggestions'>
-          {suggestions.length > 0 && (
+          {isLoading && searchValue.trim().length >=2 && (
+            <ul className='dropdown'>
+              <li className='autocompleteOptions'>Searching...</li>
+            </ul>
+          )}
+          {!isLoading && suggestions.length > 0 && (
             <ul className='dropdown'>
               {suggestions.map((feature, i) => {
                 const { city, address_line1, state_code, country } = feature.properties;
