@@ -363,11 +363,11 @@ main {
   }
 
   .app-container {
-    gap: 3vh;
+    gap: 5vh;
   }
 
   main {
-    gap: 3vh;
+    gap: 6vh;
   }
 
   .currentContainer {
