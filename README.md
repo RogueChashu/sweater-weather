@@ -52,13 +52,13 @@ To improve the search experience and data reliability, the search flow was overh
 - Unified search flow: Refactored the search pipeline so every code path — initial load, geolocation, and manual search — follows the same coordinate-driven logic, eliminating edge cases in location handling.
 
 
-## Tech stack:
-- Core: React, Typescript, Vite
+## Tech stack
+- Core: React, TypeScript, Vite
 - Styling: Vanilla CSS
 - Backend: Vercel Serverless Functions
 - Deployment: Vercel
 
-## Features:
+## Features
 - Loads local weather automatically on launch using device geolocation
 - Search any city worldwide with live autocomplete suggestions
 - 5-day forecast with daily temperature range and conditions
