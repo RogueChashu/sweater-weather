@@ -2,7 +2,7 @@
 
 [View Live Demo]()
 
-![Preview of weather app]()
+![Preview of weather app](https://github.com/RogueChashu/sweater-weather/blob/main/src/assets/Sweaterweather%202026-06-15.gif)
 
 I built this weather application in several distinct phases to solidify my understanding of modern web development fundamentals and to practice scaling a codebase.
 
